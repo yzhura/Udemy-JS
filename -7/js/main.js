@@ -1,0 +1,14 @@
+let startBtn = document.getElementById('start'),
+    valuesList = document.querySelectorAll(".budget-value, .daybudget-value, .level-value, .expenses-value, .optionalexpenses-value, .income-value, .monthsavings-value, .yearsavings-value");
+    inputs = document.getElementsByClassName("expenses-item"),
+    expensesBtn = document.querySelector('button.expenses-item-btn'),
+    optionalBtn = document.querySelector('button.optionalexpenses-btn'),
+    countBtn = document.querySelector('button.count-budget-btn'),
+    optionalExpensesItems  = document.querySelectorAll('.optionalexpenses-item'),
+    chooseIncome = document.querySelector('.choose-income'),
+    checkbox = document.querySelector('input#savings'),
+    chooseSum = document.querySelector('input.choose-sum'),
+    chooseProcent = document.querySelector('input.choose-percent'),
+    yearValue = document.querySelector('input.year-value'),
+    monthValue = document.querySelector('input.month-value'),
+    dayValue = document.querySelector('input.day-value');
