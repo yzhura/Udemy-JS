@@ -36,8 +36,10 @@ let appData = {
     savings: false
 }
 
+
 for (key in appData) {
     console.log("Наша программа включает в себя данные: " + key);
+    console.log("Наша программа включает в себя значения: " + appData[key]);
 }
 
 for(let i = 0; i < allBtns.length; i++) {
@@ -117,10 +119,18 @@ countBtn.addEventListener('click', function() {
 });
 
 dayBudgetBtn.addEventListener('click', function() {
-    // Первый способ:
-    appData.moneyPerDay = (appData.budget - sumOfExpensesValue) / 30;
-    dayBudgetValue.textContent = appData.moneyPerDay.toFixed(1);
 
+    // Первый способ:
+    // appData.moneyPerDay = (appData.budget - sumOfExpensesValue) / 30;
+    // dayBudgetValue.textContent = appData.moneyPerDay.toFixed(1);
+
+    //Второй способ
+    let sum = 0;
+    for (key in appData.expenses) {
+        sum += +appData.expenses[key];
+    }
+    appData.moneyPerDay = (appData.budget - sum) / 30;
+    dayBudgetValue.textContent = appData.moneyPerDay.toFixed(1);
 })
 
 chooseIncome.addEventListener('input', function() {
