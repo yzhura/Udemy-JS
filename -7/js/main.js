@@ -12,8 +12,8 @@ let startBtn = document.getElementById('start'),
     expensesItem = document.getElementsByClassName("expenses-item"),
     expensesBtn = document.getElementsByTagName('button')[0],
     optionalBtn = document.getElementsByTagName('button')[1],
-    dayBudgetBtn = document.getElementsByTagName('button')[2],
-    countBtn = document.getElementsByTagName('button')[3],
+    // dayBudgetBtn = document.getElementsByTagName('button')[2],
+    countBtn = document.getElementsByTagName('button')[2],
     optionalExpensesItems = document.querySelectorAll('.optionalexpenses-item'),
     chooseIncome = document.querySelector('.choose-income'),
     checkbox = document.querySelector('input#savings'),
@@ -116,10 +116,7 @@ countBtn.addEventListener('click', function() {
     } else {
         dayBudgetValue.textContent = 'Error';
     }
-});
-
-dayBudgetBtn.addEventListener('click', function() {
-
+    
     // Первый способ:
     // appData.moneyPerDay = (appData.budget - sumOfExpensesValue) / 30;
     // dayBudgetValue.textContent = appData.moneyPerDay.toFixed(1);
@@ -131,7 +128,8 @@ dayBudgetBtn.addEventListener('click', function() {
     }
     appData.moneyPerDay = (appData.budget - sum) / 30;
     dayBudgetValue.textContent = appData.moneyPerDay.toFixed(1);
-})
+});
+
 
 chooseIncome.addEventListener('input', function() {
     let items = chooseIncome.value;
