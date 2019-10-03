@@ -44,8 +44,10 @@ for (key in appData) {
 for(let i = 0; i < allBtns.length; i++) {
     if (appData.budget == undefined) {
         allBtns[i].setAttribute('disabled', '');
+        allBtns[i].style.opacity = ".35";
         if (allBtns[i].classList.contains("start")) {
             allBtns[i].removeAttribute('disabled');
+            allBtns[i].style.opacity = "1";
         }
     }
 }
@@ -68,6 +70,7 @@ startBtn.addEventListener('click', function() {
     if (appData.budget != undefined){
         for(let i = 0; i < allBtns.length; i++) {
             allBtns[i].removeAttribute('disabled');
+            allBtns[i].style.opacity = "1";
         }
     }
 });
