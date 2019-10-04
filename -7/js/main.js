@@ -132,7 +132,6 @@ countBtn.addEventListener('click', function() {
     dayBudgetValue.textContent = appData.moneyPerDay.toFixed(1);
 });
 
-
 chooseIncome.addEventListener('input', function() {
     let items = chooseIncome.value;
     appData.income = items.split(", ");
