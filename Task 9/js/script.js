@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
             }
         }
-    })
+    });
 
 
     //TIMER
