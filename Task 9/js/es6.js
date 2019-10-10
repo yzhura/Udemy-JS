@@ -17,5 +17,7 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     let obj = new Options(50, 75, 'red', 15, 'center');
+    let obj2 = new Options(50, 1154, 'green', 15, 'center');
     obj.createNewDiv('Привет');
+    obj2.createNewDiv('Пр234ивет');
 });

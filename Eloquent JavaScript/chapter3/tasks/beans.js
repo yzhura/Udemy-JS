@@ -5,7 +5,7 @@ function countBs(string) {
 
 function countChar(string, letter) {
     var counter = 0;
-    for(i=0; i < string.length; i++) {
+    for(let i=0; i < string.length; i++) {
         if(string[i] == letter) { // или if(string.charAt(i) == letter) 
             counter++;
         }
