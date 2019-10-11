@@ -126,10 +126,22 @@ window.addEventListener('DOMContentLoaded', function() {
 
         statusMessage.classList.add('status');
 
+    let formCall = document.getElementById('form'),
+        inputCall = form.getElementsByTagName('input');
+
+    formCall.addEventListener('submit', function(event) {
+        event.preventDefault();
+        formCall.appendChild(statusMessage);
+        sendReques(inputCall);
+    });
+
     form.addEventListener('submit', function(event) {
         event.preventDefault();
         form.appendChild(statusMessage);
-        
+        sendReques(input);
+    });
+
+    function sendReques(inputs) {
         let request = new XMLHttpRequest();
         request.open('POST', 'served.php');
         // request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -156,8 +168,8 @@ window.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        for(let i = 0; i < input.length; i++) {
-            input[i].value = '';
+        for(let i = 0; i < inputs.length; i++) {
+            inputs[i].value = '';
         }
-    });
+    }
 });
