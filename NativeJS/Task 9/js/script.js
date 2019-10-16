@@ -195,7 +195,10 @@ window.addEventListener('DOMContentLoaded', function() {
             slideIndex = slides.length;
         }
 
+        //ES 6
         slides.forEach((item) => item.style.display = 'none');
+
+        // ES 5
         // for (let i = 0; i < slides.length; i++) {
         //     slides[i].style.display = 'none';
         // }
