@@ -1,0 +1,17 @@
+window.addEventListener('DOMContentLoaded', function() {
+
+    'use sctrict';
+    let calc = require('./js/calc.js'),
+        form = require('./js/form.js'),
+        slider = require('./js/slider.js'),
+        tabs = require('./js/tabs.js'),
+        timer = require('./js/timer.js'),
+        modal = require('./js/modal.js');
+
+    calc();
+    form();
+    slider();
+    tabs();
+    timer();
+    modal();
+});

@@ -1,0 +1,8 @@
+https://tproger.ru/translations/webpack-basics/
+
+https://webpack.js.org/guides/installation/
+npm install --save-dev webpack
+npm install --save-dev webpack-cli
+
+
+Добавляем загрузчики стилей + npm i -D extract-text-webpack-plugin@next (https://github.com/webpack-contrib/extract-text-webpack-plugin/releases)
