@@ -3,14 +3,50 @@ import './add-item.css';
 
 export default class AddItem extends Component {
 
+    state = {
+        label: ''
+    };
+
+    constructor() {
+        super();
+
+        this.onLabelChange = (event) => {
+            const target = event.target.value;
+            this.setState({
+                label: target
+            });
+            console.log(this.state.label);
+        }
+
+        this.onSubmit = (event) => {
+            event.preventDefault();
+            const input = document.getElementById('inputItem');
+            const itemLength = this.state.label.length;
+            if (itemLength === 0) {
+                input.classList.add('alert', 'alert-danger');
+                input.placeholder = 'Enter something!'
+            } else {
+                this.props.addNewItem(this.state.label);
+                input.classList.remove('alert', 'alert-danger');
+                this.setState({
+                    label: ''
+                })
+            }
+            
+        }
+    }
+
     render() {
-        const {addNewItem} = this.props;
         return (
-            <div className='item-add-form'>
+            <form className='item-add-form' onSubmit={this.onSubmit}>
+                <input id="inputItem"
+                        type="text" 
+                        className="form-control" 
+                        onChange={this.onLabelChange} placeholder="Type text"
+                        value = {this.state.label}/>
                 <button type="button"
-                        className="btn btn-info"
-                        onClick={() => addNewItem('123')}>Add Task</button>
-            </div>
+                        className="btn btn-info" onClick={this.onSubmit}>Add Task</button>
+            </form>
         );
     }
 }
