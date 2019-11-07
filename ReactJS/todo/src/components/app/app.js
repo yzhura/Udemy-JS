@@ -84,6 +84,13 @@ export default class App extends Component {
 			]
 		}
 
+		this.toggleFilter = (arr, id, propName) => {
+			const idx = arr.findIndex((el) => el.id === id);
+			const oldItem = arr[idx];
+			const newItem = {...oldItem, [propName]: !oldItem[propName]};
+			return [idx, newItem]
+		}
+
 		this.onToggleImportant = (id) => {
 			this.setState(({todoData}) => {
 				return {
@@ -120,11 +127,11 @@ export default class App extends Component {
 				let newTodoData = todoData;
 
 				newFilterData.forEach((el) => el.active = false);
-
-				const idx = filterData.findIndex((el) => el.id === id);
-				const neededBtn = filterData[idx];
-				const newItem = {...neededBtn, active: !neededBtn.active};
 				
+				const newItems = this.toggleFilter(newFilterData, id, 'active');
+
+				const [idx, newItem] = newItems;
+
 				if(newItem.label === 'Done') {
 					newTodoData.forEach((el) => {
 						el.visibility = true;
