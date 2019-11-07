@@ -11,12 +11,18 @@ import './app.css';
 export default class App extends Component { 
 
 	maxId = 100;
+	filterId = 0;
 
 	state = {
 		todoData: [
 			this.createItem('Drink'),
 			this.createItem('Eat'),
 			this.createItem('Sleep')
+		],
+		filterData: [
+			this.createFilter('All', true),
+			this.createFilter('Active', false),
+			this.createFilter('Done', false)
 		]
 	};
 
@@ -28,6 +34,14 @@ export default class App extends Component {
 			id: this.maxId++,
 			visibility: true,
 			searchlabel: label.toLowerCase()
+		}
+	}
+
+	createFilter(label, active) {
+		return {
+			label,
+			active,
+			id: this.filterId++
 		}
 	}
 
@@ -91,41 +105,74 @@ export default class App extends Component {
 			this.setState(({todoData}) => {
 				const searchingWord = target;
 				const newArr = todoData;
-				newArr.forEach((el) => {
-					console.log(el.searchlabel, searchingWord);
-					for(let i = 0; i < searchingWord.length; i++) {
-						if(el.searchlabel.charAt(i) == searchingWord.charAt(i)) {
-							el.visibility = false;
-						}
-					}
-				})
+				newArr.filter((el) => {
+					return el.visibility = el.searchlabel.includes(searchingWord); //Фильтром проверил совпадает ли слово
+				});
 				return {
 					todoData: newArr
 				}
 			})
 		}
 
-		this.itemFilter = () => {
-			this.setState(({searchLal, todoData}) => {
+		this.onToogleFilter = (id) => {
+			this.setState(({filterData, todoData}) => {
+				let newFilterData = filterData;
+				let newTodoData = todoData;
+
+				newFilterData.forEach((el) => el.active = false);
+
+				const idx = filterData.findIndex((el) => el.id === id);
+				const neededBtn = filterData[idx];
+				const newItem = {...neededBtn, active: !neededBtn.active};
 				
+				if(newItem.label === 'Done') {
+					newTodoData.forEach((el) => {
+						el.visibility = true;
+						if(el.done === false) {
+							return el.visibility = false;
+						}
+					});
+				} else if (newItem.label === 'Active') {
+					newTodoData.forEach((el) => {
+						el.visibility = true;
+						if(el.done === true) {
+							return el.visibility = false;
+						}
+					});
+				} else if (newItem.label === 'All') {
+					newTodoData.forEach((el) => {
+						el.visibility = true;
+					});
+				}
+
+				newFilterData = [
+					...filterData.slice(0, idx),
+					newItem,
+					...filterData.slice(idx + 1)
+				]
+
+				return {
+					todo: newTodoData,
+					filterData: newFilterData
+				}
 			})
 		}
 	}
 
 	render () {
-		const {todoData} = this.state;
+		const {todoData, filterData} = this.state;
 		const doneCount = todoData.filter((el) => el.done).length;
 		const moreCount = todoData.length - doneCount;
-		console.log(this.state);
 
 		return (
 			<div className="todo-app">
 				<AppHeader toDo={moreCount} done={doneCount} />
 				<div className="top-panel d-flex">
 					<SearchPanel 
-						itemSearch = {this.itemSearch} 
-						itemFilter = {this.itemFilter}/>
-					<ItemStatusFilter />
+						itemSearch = {this.itemSearch} />
+					<ItemStatusFilter
+						onToogleFilter = {this.onToogleFilter}
+						filter={filterData}/>
 				</div>
 				<TodoList 
 					todos={todoData} 

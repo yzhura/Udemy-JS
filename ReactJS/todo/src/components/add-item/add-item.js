@@ -15,7 +15,6 @@ export default class AddItem extends Component {
             this.setState({
                 label: target
             });
-            console.log(this.state.label);
         }
 
         this.onSubmit = (event) => {
@@ -32,7 +31,6 @@ export default class AddItem extends Component {
                     label: ''
                 })
             }
-            
         }
     }
 

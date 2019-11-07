@@ -5,24 +5,30 @@ import './todo-list.css';
 
 const TodoList = ({ todos, onDeleted, onToggleImportant, onToggleDone }) => {
 
-  const elements = todos.map((item) => {
-	const { id, ...itemProps } = item;
-	return (
-	  <li key={id} className="list-group-item">
-		<TodoListItem 
-			{...itemProps } 
-			onDeleted = {() => onDeleted(id)}
-			onToggleDone = {() => onToggleDone(id)}
-			onToggleImportant = {() => onToggleImportant(id)}/>
-	  </li>
-	);
-  });
+	const elements = todos.map((item) => {
+		const { id, visibility, ...itemProps } = item;
+		let classNames = 'list-group-item';
 
-  return (
-	<ul className="list-group todo-list">
-		{ elements }
-	</ul>
-  );
+		if(!visibility) {
+			classNames += ' d-none';
+		}
+
+		return (
+			<li key={id} className={classNames}>
+				<TodoListItem 
+					{...itemProps } 
+					onDeleted = {() => onDeleted(id)}
+					onToggleDone = {() => onToggleDone(id)}
+					onToggleImportant = {() => onToggleImportant(id)}/>
+			</li>
+		);
+	});
+
+	return (
+		<ul className="list-group todo-list">
+			{ elements }
+		</ul>
+	);
 };
 
 export default TodoList;
