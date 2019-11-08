@@ -15,9 +15,7 @@ export default class App extends Component {
 
 	state = {
 		todoData: [
-			this.createItem('Drink'),
-			this.createItem('Eat'),
-			this.createItem('Sleep')
+			this.createItem('Hello')
 		],
 		filterData: [
 			this.createFilter('All', true),
