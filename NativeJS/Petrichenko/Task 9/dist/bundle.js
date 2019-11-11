@@ -94,7 +94,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nwindow.addEventListener('DOMContentLoaded', function () {\n  'use sctrict';\n\n  var calc = __webpack_require__(/*! ./js/calc.js */ \"./src/js/calc.js\"),\n      form = __webpack_require__(/*! ./js/form.js */ \"./src/js/form.js\"),\n      slider = __webpack_require__(/*! ./js/slider.js */ \"./src/js/slider.js\"),\n      tabs = __webpack_require__(/*! ./js/tabs.js */ \"./src/js/tabs.js\"),\n      timer = __webpack_require__(/*! ./js/timer.js */ \"./src/js/timer.js\"),\n      modal = __webpack_require__(/*! ./js/modal.js */ \"./src/js/modal.js\");\n\n  calc();\n  form();\n  slider();\n  tabs();\n  timer();\n  modal();\n});\n\n//# sourceURL=webpack:///./src/app.js?");
+eval("\n\nwindow.addEventListener('DOMContentLoaded', function () {\n  'use sctrict';\n\n  var calc = __webpack_require__(/*! ./js/calc.js */ \"./src/js/calc.js\"),\n      form = __webpack_require__(/*! ./js/form.js */ \"./src/js/form.js\"),\n      slider = __webpack_require__(/*! ./js/slider.js */ \"./src/js/slider.js\"),\n      tabs = __webpack_require__(/*! ./js/tabs.js */ \"./src/js/tabs.js\"),\n      timer = __webpack_require__(/*! ./js/timer.js */ \"./src/js/timer.js\"),\n      modal = __webpack_require__(/*! ./js/modal.js */ \"./src/js/modal.js\");\n\n  scroll = __webpack_require__(/*! ./js/scroll.js */ \"./src/js/scroll.js\");\n  calc();\n  form();\n  slider();\n  tabs();\n  timer();\n  modal();\n  scroll();\n});\n\n//# sourceURL=webpack:///./src/app.js?");
 
 /***/ }),
 
@@ -131,6 +131,17 @@ eval("\n\nfunction form() {\n  var message = {\n    loading: 'Загрузка',
 
 "use strict";
 eval("\n\nfunction modal() {\n  var more = document.querySelector('.more'),\n      overlay = document.querySelector('.overlay'),\n      close = document.querySelector('.popup-close'),\n      tabBtn = document.querySelectorAll('.description-btn'),\n      tabHolder = document.querySelector('.info');\n  more.addEventListener('click', function () {\n    overlay.style.display = 'block';\n    this.classList.add('more-splash');\n    document.body.style.overflow = 'hidden';\n  });\n  close.addEventListener('click', function () {\n    overlay.style.display = 'none';\n    more.classList.remove('more-splash');\n    document.body.style.overflow = '';\n  });\n  tabHolder.addEventListener('click', function (event) {\n    target = event.target;\n\n    if (target && target.classList.contains('description-btn')) {\n      overlay.style.display = 'block';\n      document.body.style.overflow = 'hidden';\n    }\n  });\n}\n\nmodule.exports = modal;\n\n//# sourceURL=webpack:///./src/js/modal.js?");
+
+/***/ }),
+
+/***/ "./src/js/scroll.js":
+/*!**************************!*\
+  !*** ./src/js/scroll.js ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("function scroll() {}\n\n//# sourceURL=webpack:///./src/js/scroll.js?");
 
 /***/ }),
 

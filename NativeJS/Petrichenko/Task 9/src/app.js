@@ -9,6 +9,7 @@ window.addEventListener('DOMContentLoaded', function () {
       tabs = require('./js/tabs.js'),
       timer = require('./js/timer.js'),
       modal = require('./js/modal.js');
+      scroll = require('./js/scroll.js');
 
   calc();
   form();
@@ -16,4 +17,5 @@ window.addEventListener('DOMContentLoaded', function () {
   tabs();
   timer();
   modal();
+  scroll();
 });
