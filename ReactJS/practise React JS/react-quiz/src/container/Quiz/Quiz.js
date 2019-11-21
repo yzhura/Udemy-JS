@@ -6,7 +6,8 @@ import FinishedQuiz from '../../components/FinishedQuiz/FinishedQuiz';
 export default class Quiz extends Component {
 
     state = {
-        finisedQuiz: true,
+        results: {}, //{[id]: success ? error Для проверки ответов в конце}
+        finisedQuiz: false,
         questionCheck: null,
         activeQuiz: 0,
         quiz: [
@@ -44,10 +45,15 @@ export default class Quiz extends Component {
         }
 
         const question = this.state.quiz[this.state.activeQuiz];
+        const results = this.state.results;
 
         if(question.rightAnswerId === answerId) {
+            if(!results[question.key]) {
+                results[question.key] = 'success'
+            }
             this.setState({
-                questionCheck: {[answerId]: 'success'}
+                questionCheck: {[answerId]: 'success'},
+                results
             })
             const timer = window.setTimeout(() => {
                 if(question.key === this.state.quiz.length) {
@@ -64,10 +70,21 @@ export default class Quiz extends Component {
             }, 1000)
 
         } else {
+            results[question.key] = 'error'
             this.setState({
-                questionCheck: {[answerId]: 'error'}
+                questionCheck: {[answerId]: 'error'},
+                results
             })
         }
+    }
+
+    retryHandler = () => {
+        this.setState({
+            results: {},
+            finisedQuiz: false,
+            questionCheck: null,
+            activeQuiz: 0
+        })
     }
 
     render() {
@@ -78,7 +95,10 @@ export default class Quiz extends Component {
                     {
                         this.state.finisedQuiz
                         ?
-                        <FinishedQuiz></FinishedQuiz>
+                        <FinishedQuiz 
+                            retryHandler={this.retryHandler}
+                            results={this.state.results}
+                            quiz={this.state.quiz}/>
                         :
                         <ActiveQuiz 
                             onAnswerClickHandler={this.onAnswerClickHandler}
