@@ -48,7 +48,7 @@ export default class Quiz extends Component {
         const results = this.state.results;
 
         if(question.rightAnswerId === answerId) {
-            if(!results[question.key]) {
+            if(!results[question.key]) { //Проверяем есть ли какие-то значения в результатах, если нет добавляем нужные
                 results[question.key] = 'success'
             }
             this.setState({
@@ -70,10 +70,10 @@ export default class Quiz extends Component {
             }, 1000)
 
         } else {
-            results[question.key] = 'error'
+            results[question.key] = 'error' //Получаем в объект result нужный id вопроса и присваеваем значение error
             this.setState({
                 questionCheck: {[answerId]: 'error'},
-                results
+                results //Синтаксис ES6 results: results;
             })
         }
     }
