@@ -25,7 +25,7 @@ const FinishedQuiz = props => {
                             key={index}>
                             <strong>{index + 1} </strong>.&nbsp;
                                 {quizItem.question}
-                            {/* Просто массив cls джиним и получаем красивые классы */}
+                            {/* Просто массив cls джоиним и получаем красивые классы */}
                             <i className={cls.join(' ')}></i>
                         </li>
                     )
