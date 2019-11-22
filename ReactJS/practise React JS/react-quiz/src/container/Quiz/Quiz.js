@@ -73,7 +73,7 @@ export default class Quiz extends Component {
             results[question.key] = 'error' //Получаем в объект result нужный id вопроса и присваеваем значение error
             this.setState({
                 questionCheck: {[answerId]: 'error'},
-                results //Синтаксис ES6 results: results;
+                results //Синтаксис ES6: "results: results";
             })
         }
     }
@@ -96,7 +96,7 @@ export default class Quiz extends Component {
                         this.state.finisedQuiz
                         ?
                         <FinishedQuiz 
-                            retryHandler={this.retryHandler}
+                            onRetry={this.retryHandler}
                             results={this.state.results}
                             quiz={this.state.quiz}/>
                         :
