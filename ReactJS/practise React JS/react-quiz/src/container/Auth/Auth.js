@@ -11,8 +11,9 @@ function validateEmail(email) {
 }
 
 export default class Auth extends Component {
-
+    //В компоненте QuizCreator альтернативный способ создания инпутов
     state = {
+        isFormValid: false,
         formControls: {
             email: {
                 value: '',
@@ -21,7 +22,7 @@ export default class Auth extends Component {
                 errorMsg: 'Введите корректный email',
                 valid: false,
                 touched: false,
-                validation: {
+                validation: { // Правила для валидаци
                     required: true,
                     email: true
                 }
@@ -79,14 +80,21 @@ export default class Auth extends Component {
         const formControls = {...this.state.formControls}; //деструктуризируем state.formControls (const formControls это копия стейта)
         const control = { ...formControls[controlName] };  //деструктуризируем const formControls[controlName] это будет или мыло или пароль, взависимости в какой инпут вводит данные пользователь
 
-        control.value = event.target.value; //присваеваем контолу value который вводи пользователь
+        control.value = event.target.value; //присваеваем контолу value который вводит пользователь
         control.touched = true; 
         control.valid = this.validateControl(control.value, control.validation); //Валидация (control.validation это объект из стейта)
 
         formControls[controlName] = control; //присваеваем нужному инпуты свойства который мы присвоили выше
 
+        let isFormValid = true;
+
+        Object.keys(formControls).forEach((name) => {
+            isFormValid = formControls[name].valid && isFormValid; // присваеваем значения либо true либо false из formControls[name] как пройдем проверка
+        })
+
         this.setState({
-            formControls 
+            isFormValid,
+            formControls
         })
     }
 
@@ -99,10 +107,10 @@ export default class Auth extends Component {
                     key={controlName + index}
                     type={control.type}
                     value={control.value}
-                    valid={control.valid} // В компоненте Input нужно дляпроверки и доавления класса .invalid
-                    touched={control.touched} // В компоненте Input нужно дляпроверки и доавления класса .invalid
+                    valid={control.valid} // В компоненте Input нужно для проверки и доавления класса .invalid
+                    touched={control.touched} // В компоненте Input нужно для проверки и доавления класса .invalid
                     label={control.label}
-                    shouldValidate={!!control.validation} //Привести control.validation к boolean с помощью "!!".  В компоненте Input нужно дляпроверки и доавления класса .invalid
+                    shouldValidate={!!control.validation} //Привести control.validation к boolean с помощью "!!".  В компоненте Input нужно для проверки и доавления класса .invalid
                     errorMsg={control.errorMsg} //Сообщение ошибки, выводит спам под инпутом
                     onChange={(event) => this.onСhangeHandler(event, controlName)}
                 />
@@ -113,25 +121,28 @@ export default class Auth extends Component {
     render() {
         return (
             <div className={classes.Auth}>
-                <h1>Авторизация</h1>
-                <form 
-                    onSubmit={this.onSubmitHandler} 
-                    className={classes.AuthForm}>
+                <div>
+                    <h1>Авторизация</h1>
+                    <form 
+                        onSubmit={this.onSubmitHandler} 
+                        className={classes.AuthForm}>
 
-                        {/* Рендерит инпуты */}
-                        {this.renderInputs()} 
+                            {/* Рендерит инпуты */}
+                            {this.renderInputs()} 
 
-                        <Button 
-                            type='success' 
-                            onClick={this.loginHandler}>
-                                Войти
-                        </Button>
-                        <Button 
-                            type='success' 
-                            onClick={this.registerHandler}>
-                                Зарегистрироваться
-                        </Button>
-                </form>
+                            <Button 
+                                type='success' 
+                                onClick={this.loginHandler}
+                                disabled={!this.state.isFormValid}>
+                                    Войти
+                            </Button>
+                            <Button 
+                                type='success' 
+                                onClick={this.registerHandler}>
+                                    Зарегистрироваться
+                            </Button>
+                    </form>
+                </div>
             </div>
         );
     }

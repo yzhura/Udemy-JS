@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Input.module.scss';
 
-function isInvalid({valid, touched, shouldValidate}) {//Деструктуризируем нужные пропсы.
+function isInvalid({valid, touched, shouldValidate}) {//Деструктуризируем нужные пропсы. 
     return !valid && touched && shouldValidate
 }
 
