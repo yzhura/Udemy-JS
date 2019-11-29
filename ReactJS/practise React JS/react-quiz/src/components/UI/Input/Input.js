@@ -22,7 +22,7 @@ const Input = props => {
                 id={htmlFor}
                 value={props.value}
                 onChange={props.onChange}/>
-            {isInvalid(props) ? <span>{props.errorMsg}</span> : null}
+                {isInvalid(props) ? <span>{props.errorMsg}</span> : null}
         </div>
     );
 }
