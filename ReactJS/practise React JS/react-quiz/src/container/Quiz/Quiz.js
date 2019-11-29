@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import classes from './Quiz.module.scss';
 import ActiveQuiz from '../../components/ActiveQuiz/ActiveQuiz';
 import FinishedQuiz from '../../components/FinishedQuiz/FinishedQuiz';
+import axios from 'axios';
 
 export default class Quiz extends Component {
 
@@ -12,28 +13,50 @@ export default class Quiz extends Component {
         activeQuiz: 0,
         quiz: [
             {
-                question: 'Вопрос 1',
+                question: '',
                 rightAnswerId: 1,
                 key: 1,
                 answers: [
-                    {text: 'Ответ', id: 1},
-                    {text: 'Ответ', id: 2},
-                    {text: 'Ответ', id: 3},
-                    {text: 'Ответ', id: 4},
+                    {text: '', id: 1},
+                    {text: '', id: 2},
+                    {text: '', id: 3},
+                    {text: '', id: 4},
                 ]
             },
             {
-                question: 'Вопрос 2',
+                question: '',
                 rightAnswerId: 2,
                 key: 2,
                 answers: [
-                    {text: 'Ответ', id: 1},
-                    {text: 'Ответ', id: 2},
-                    {text: 'Ответ', id: 3},
-                    {text: 'Ответ', id: 4},
+                    {text: '', id: 1},
+                    {text: '', id: 2},
+                    {text: '', id: 3},
+                    {text: '', id: 4},
                 ]
             }
         ]
+    }
+
+    async componentDidMount() {
+        try {
+            const response = await axios.get('https://react-quiz-419e0.firebaseio.com/quizes.json');
+            const quizes = [];
+            // console.log(response.data);
+            Object.keys(response.data).forEach((key, index) => {// прошлись по всему массиву ответа. Метод Object.keys() возвращает массив из собственных перечисляемых свойств переданного объекта, в том же порядке, в котором они бы обходились циклом for...in (разница между циклом и методом в том, что цикл перечисляет свойства и из цепочки прототипов).
+                // console.log(response.data[key]['0'].question);
+                quizes.push({
+                    id: index,
+                    question: response.data[key]['0'].question,
+                    rightAnswerId: response.data[key]['0'].rightAnswerId,
+                    answers: response.data[key]['0'].answers
+                })
+            });
+            this.setState ({
+                quiz: quizes
+            })
+        } catch(e) {
+            console.log(e);
+        }
     }
 
     onAnswerClickHandler = answerId => {

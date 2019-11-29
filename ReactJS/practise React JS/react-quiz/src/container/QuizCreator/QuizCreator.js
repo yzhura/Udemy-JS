@@ -5,6 +5,7 @@ import {createControl, validate, validateForm} from '../../form/FormFramework';
 import Input from '../../components/UI/Input/Input';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Select from '../../components/UI/Select/Select';
+import axios from 'axios';
 
 function createOptionControl(number) { //Создание инпутов
     return createControl({
@@ -69,9 +70,21 @@ export default class QuizCreator extends Component {
         })
     }
 
-    createQuizHandler = (e) => {
+    createQuizHandler = async(e) => {
         e.preventDefault();
-        // TODO: Server
+        
+        try {
+            // Отправляем через библиотеку Axios заполненые инпуты в Firebase, вторым аргументом в методе post должен быть отправляемый массив, в нашел случае это наш стейт. после отправку стейт обнуляется
+            await axios.post('https://react-quiz-419e0.firebaseio.com/quizes.json', this.state.quiz);
+            this.setState({
+                quiz: [],
+                rightAnswerId: 1,
+                isFormValid: false,
+                formControls: createFormControls()
+            })
+        } catch(e) {
+            console.log(e)
+        }
     }
 
     changeHandler = (value, controlName) => {

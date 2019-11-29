@@ -26,7 +26,7 @@ export function validateForm(formControls) {
    let isFormValid = true;
 
    for(let control in formControls) {
-       if(formControls.hasOwnProperty(control)) {
+       if(formControls.hasOwnProperty(control)) { //Метод hasOwnProperty() возвращает логическое значение, указывающее, содержит ли объект указанное свойство.
         isFormValid = formControls[control].valid && isFormValid;
        }
    }
