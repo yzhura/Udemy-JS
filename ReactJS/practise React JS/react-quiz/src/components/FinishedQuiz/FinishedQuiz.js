@@ -16,8 +16,8 @@ const FinishedQuiz = props => {
                 {props.quiz.map((quizItem, index) => {
                     const cls = [
                         'fa',
-                        props.results[quizItem.key] === 'error' ? 'fa-times' : 'fa-check',
-                        clases[props.results[quizItem.key]]
+                        props.results[quizItem.id] === 'error' ? 'fa-times' : 'fa-check',
+                        clases[props.results[quizItem.id]]
                     ]
                     /* cls - это массив классов что бы правльно отрисовать иконку возле ответов. 
                         Му тут берем массив quiz и через map проходимся по объектам quizItem и ставим нужные классы

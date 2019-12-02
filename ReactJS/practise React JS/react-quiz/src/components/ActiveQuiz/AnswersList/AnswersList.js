@@ -11,7 +11,10 @@ const AnswersList = props => {
                         onAnswerClickHandler = {props.onAnswerClickHandler}
                         answer={answer} 
                         key={index}
-                        questionCheck={props.questionCheck ? props.questionCheck[answer.id] : null}
+                        questionCheck={
+                            props.questionCheck 
+                            ? props.questionCheck[answer.id]
+                            : null}
                   />
                 )
             })}

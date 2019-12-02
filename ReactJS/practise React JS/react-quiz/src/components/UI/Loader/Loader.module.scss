@@ -1,0 +1,33 @@
+
+@keyframes Loiading {
+  0% { transform: translate(-50%,-50%) rotate(0deg); }
+  100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+.Loiading div {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border: 4px solid #ffffff;
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+.Loiading div {
+  animation: Loiading 1s linear infinite;
+  top: 100px;
+  left: 100px
+}
+.LoiadingWrap {
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  overflow: hidden;
+}
+.Loiading {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.Loiading div { box-sizing: content-box; }
