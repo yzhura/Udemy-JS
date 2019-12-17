@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import './app.module.scss';
+import './app.scss';
+import Header from '../header';
+import IntroForm from '../introForm';
 
 export class App extends Component {
     render() {
         return (
-            <div>
-                
+            <div className='container'>
+                <Header/>
+                <IntroForm/>
             </div>
         );
     }
