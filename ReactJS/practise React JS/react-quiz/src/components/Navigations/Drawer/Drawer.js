@@ -4,7 +4,8 @@ import BackDrop from '../../UI/BackDrop/BackDrop';
 import {NavLink} from 'react-router-dom';
 
 const links = [
-    {to: '/', label: 'Список', exact: true},
+    {to: '/', label: 'Список', exact: true}, //Если установлен exact prop. Совпадает только строгое сравнение '/roster', но не
+    // '/roster/2'
     {to: '/auth', label: 'Авторизация', exact: false},
     {to: '/quiz-creator', label: 'Создать тест', exact: false}
 ]
@@ -23,8 +24,7 @@ export default class Drawer extends Component {
                         to={link.to}
                         exact={link.exact}
                         activeClassName={classes.active}
-                        onClick={this.clickHandler}
-                    >
+                        onClick={this.clickHandler}>
                         {link.label}
                     </NavLink>
                 </li>
