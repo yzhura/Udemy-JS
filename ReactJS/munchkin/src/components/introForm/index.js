@@ -1,3 +1,3 @@
-import IntroForm from './introForm';
+import InputForm from './introForm';
 
-export default IntroForm;
+export default InputForm;
