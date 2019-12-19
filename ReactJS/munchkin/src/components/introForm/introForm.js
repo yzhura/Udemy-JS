@@ -53,7 +53,9 @@ export default class IntroForm extends Component {
 		e.preventDefault();
 	}
 
-	onChangeHandler = (value, index) => {
+
+	//Функция для связи инпута и стейта
+	onChangeInputHandler = (value, index) => {
 		const newPlayersList = [...this.state.playersList];
 		newPlayersList[index].name = value;
 		this.setState({
@@ -69,7 +71,7 @@ export default class IntroForm extends Component {
 					key={index} 
 					playersCounter={index+1}
 					value={this.state.playersList[index].name}
-					onChange={(event) => this.onChangeHandler(event.target.value, index)}
+					onChange={(event) => this.onChangeInputHandler(event.target.value, index)}
 				/>
 			)
 		});
