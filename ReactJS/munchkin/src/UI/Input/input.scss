@@ -1,0 +1,43 @@
+$animation-time: .4s;
+
+.field {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(30px);
+}
+
+.label {
+    position: relative;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(30px);
+}
+
+.input {
+    position: relative;
+    transition: box-shadow .3s ease-out;
+}
+
+@for $i from 1 through 6 {
+    .field#{$i} {
+      $delay-field: .03s*$i;  
+      animation: anim-field $animation-time ease-out forwards $delay-field;
+    }
+    .label#{$i} {
+        $delay-label: .06s*$i;  
+        animation: anim-field $animation-time ease-out forwards $delay-label;
+    }
+}
+
+@keyframes anim-field {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+}

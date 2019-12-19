@@ -1,0 +1,21 @@
+$animation-time: .4s;
+
+.delete {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transform-origin: 50% 50%;
+    animation: anim-delete $animation-time ease-in-out forwards;
+}
+
+@keyframes anim-delete {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}

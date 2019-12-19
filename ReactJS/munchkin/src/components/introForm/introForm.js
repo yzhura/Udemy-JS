@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import InputName from '../inputName';
+import Input from '../../UI/Input';
+import './introForm.scss'
 
 export default class IntroForm extends Component {
 
 	state = {
-        playersCounter: 0,
-        playersList: []
+		playersCounter: 0,
+		playersList: []
 	}
 	
 	createPlayer = (id) => {
@@ -15,33 +16,65 @@ export default class IntroForm extends Component {
 		};
 	}
 
-	updatePlayerCounter = (event) => {
+	async updatePlayerCounter(event) {
 		let playersNumber = +event.target.value;
-		const newCounterArr = [];
-		for(let i = 0; i < playersNumber; i++) {
-			newCounterArr.push(this.createPlayer(i));
+		let oldPlayersNumber = this.state.playersCounter;
+		const newCounterArr = [...this.state.playersList];
+		if(newCounterArr.length === 0) {
+			for(let i = 0; i < playersNumber; i++) {
+				newCounterArr.push(this.createPlayer(i));
+			}
+		} else if (newCounterArr.length > 0 && playersNumber > oldPlayersNumber) {
+			for(let i = newCounterArr.length; i < playersNumber; i++) {
+				newCounterArr.push(this.createPlayer(i));
+			}
+		} else if (newCounterArr.length > 0 && playersNumber < oldPlayersNumber) {
+			let fields = document.querySelectorAll('.field');
+			fields.forEach((el, index) => {
+				if(index >= playersNumber) {
+					el.classList.add('delete');
+				}
+			})
+			await new Promise((resolve, reject) => {
+				setTimeout(() => {
+					resolve()
+				}, 500)
+			});
 		}
+		newCounterArr.splice(playersNumber);
 		this.setState({
 			playersCounter: playersNumber,
 			playersList: newCounterArr
 		})
 	}
-	
-	onChangePlayersName = (event, id) => {
 
-		const elem = this.state.playersList[id];
-		const newPlayersList = [... this.state.playersList]
-		// newPlayersList[id].name = event.target.value;
-		console.log(elem)
-        // this.setState({
-        //     playersList: newPlayersList
-        // })
-    }
 
 	submitHandler = (e) => {
-        e.preventDefault();
+		e.preventDefault();
 	}
-	
+
+	onChangeHandler = (value, index) => {
+		const newPlayersList = [...this.state.playersList];
+		newPlayersList[index].name = value;
+		this.setState({
+			playersList: newPlayersList
+		})
+	}
+
+	renderInput = () => {
+		const playersArr = this.state.playersList;
+		return playersArr.map((el, index) => {
+			return (
+				<Input
+					key={index} 
+					playersCounter={index+1}
+					value={this.state.playersList[index].name}
+					onChange={(event) => this.onChangeHandler(event.target.value, index)}
+				/>
+			)
+		});
+	}
+
 	render() {
 		return (
 			<form onSubmit={this.submitHandler}>
@@ -50,7 +83,7 @@ export default class IntroForm extends Component {
 					<div className="form-group">
 						<select 
 							value={this.state.playersCounter}
-							onChange = {this.updatePlayerCounter}
+							onChange = {(event) => this.updatePlayerCounter(event)}
 							className="custom-select">
 							<option value="0">Открыть</option>
 							<option value="3">Три</option>
@@ -59,10 +92,7 @@ export default class IntroForm extends Component {
 							<option value="6">Шесть</option>
 						</select>
 					</div>
-					<InputName 
-						playersCounter={this.state.playersCounter} 
-						playersList = {this.state.playersList}
-						onChangePlayersName={this.onChangePlayersName}/>
+					{this.renderInput()}
 				</fieldset>
 				<button 
 					onClick={this.addPlayers}
