@@ -18,6 +18,7 @@ $animation-time: .4s;
     transition: box-shadow .3s ease-out;
 }
 
+
 @for $i from 1 through 6 {
     .field#{$i} {
       $delay-field: .03s*$i;  

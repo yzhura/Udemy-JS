@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Input from '../../UI/Input';
-import './introForm.scss'
+import {CSSTransitionGroup} from 'react-transition-group';
+import './introForm.scss';
+
 
 export default class IntroForm extends Component {
 
@@ -29,19 +31,19 @@ export default class IntroForm extends Component {
 				newCounterArr.push(this.createPlayer(i));
 			}
 		} else if (newCounterArr.length > 0 && playersNumber < oldPlayersNumber) {
-			let fields = document.querySelectorAll('.field');
-			fields.forEach((el, index) => {
-				if(index >= playersNumber) {
-					el.classList.add('delete');
-				}
-			})
-			await new Promise((resolve, reject) => {
-				setTimeout(() => {
-					resolve()
-				}, 500)
-			});
+			// let fields = document.querySelectorAll('.field');
+			// fields.forEach((el, index) => {
+			// 	if(index >= playersNumber) {
+			// 		el.classList.add('delete');
+			// 	}
+			// })
+			// await new Promise((resolve, reject) => {
+			// 	setTimeout(() => {
+			// 		resolve()
+			// 	}, 500)
+			// });
+			newCounterArr.splice(playersNumber);
 		}
-		newCounterArr.splice(playersNumber);
 		this.setState({
 			playersCounter: playersNumber,
 			playersList: newCounterArr
@@ -53,9 +55,8 @@ export default class IntroForm extends Component {
 		e.preventDefault();
 	}
 
-
 	//Функция для связи инпута и стейта
-	onChangeInputHandler = (value, index) => {
+	onChangeHandler = (value, index) => {
 		const newPlayersList = [...this.state.playersList];
 		newPlayersList[index].name = value;
 		this.setState({
@@ -67,12 +68,15 @@ export default class IntroForm extends Component {
 		const playersArr = this.state.playersList;
 		return playersArr.map((el, index) => {
 			return (
-				<Input
-					key={index} 
-					playersCounter={index+1}
-					value={this.state.playersList[index].name}
-					onChange={(event) => this.onChangeInputHandler(event.target.value, index)}
-				/>
+
+					<Input
+
+						key={index} 
+						playersCounter={index+1}
+						value={this.state.playersList[index].name}
+						onChange={(event) => this.onChangeHandler(event.target.value, index)}
+					/>
+
 			)
 		});
 	}
@@ -94,7 +98,20 @@ export default class IntroForm extends Component {
 							<option value="6">Шесть</option>
 						</select>
 					</div>
-					{this.renderInput()}
+					<CSSTransitionGroup
+						transitionName={ {
+							enter: 'enter',
+							enterActive: 'enterActive',
+							leave: 'leave',
+							leaveActive: 'deleting',
+							appear: 'appear',
+							appearActive: 'appearActive'
+						} }
+						transitionEnterTimeout={500}
+						transitionLeaveTimeout={300}
+					>
+						{this.renderInput()}
+					</CSSTransitionGroup>
 				</fieldset>
 				<button 
 					onClick={this.addPlayers}
