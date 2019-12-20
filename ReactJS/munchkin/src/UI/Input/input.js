@@ -9,7 +9,7 @@ const Input = (props) => {
 		<div className={`field field${props.playersCounter} form-group`}>
 			<label className={`label label${props.playersCounter} form-control-label mb-0`} htmlFor={htmlFor}>Никнейм {props.playersCounter}-го Манчкина:</label>
 			<input 
-				className="input form-control"
+				className={`${props.valid} input form-control`}
 				type={inputType}
 				id={htmlFor}
 				value={props.value}

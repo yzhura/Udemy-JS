@@ -15,7 +15,8 @@ $animation-time: .4s;
 
 .input {
     position: relative;
-    transition: box-shadow .3s ease-out;
+    background-position: right calc(-1.625em + 0.1875rem) center;
+    transition: box-shadow .3s ease-out, border-color .3s ease-out, background-position .3s ease-out;
 }
 
 
