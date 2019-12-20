@@ -4,7 +4,8 @@ import {CSSTransitionGroup} from 'react-transition-group';
 import './introForm.scss';
 import axios from 'axios';
 import Popup from '../popup';
-import Select from '../select'
+import Select from '../select';
+import Backdrop from '../../UI/backdrop';
 
 
 export default class IntroForm extends Component {
@@ -86,25 +87,33 @@ export default class IntroForm extends Component {
 	}
 
 	validNames = () => {
+		let isValid;
 		const playersList = [...this.state.playersList];
 		const playersNames = [];
 		playersList.map((el) => {
 			playersNames.push(el.name)
 		})
-		playersNames.forEach((el, index) => {
-			if(el.length > 0) {
-				this.setState({
-					errorPopup: false,
-					validation: true
-				})
-			} else if (el.length === 0) {
-				this.setState({
-					errorPopup: true,
-					validation: false,
-					errorMsg: `Введите никнеймы игроков`
-				})
+		for(let i = 0; i < playersNames.length; i++) {
+			if(playersNames[i].length === 0) {
+				isValid = false;
+				break;
+			} else {
+				isValid = true;
 			}
-		})
+		}
+		isValid 
+			? 
+			this.setState({
+				errorPopup: false,
+				validation: true,
+				errorMsg: ``
+			})
+			: 
+			this.setState({
+				errorPopup: true,
+				validation: false,
+				errorMsg: `Введите никнеймы игроков`
+			}) 
 		return playersNames;
 	}
 
@@ -181,10 +190,13 @@ export default class IntroForm extends Component {
 				{
 					this.state.errorPopup 
 					?
-					<Popup
-						errorMsg={this.state.errorMsg}
-						closePopup={this.closePopup}
-						/>
+					<React.Fragment>
+						<Popup
+							errorMsg={this.state.errorMsg}
+							closePopup={this.closePopup}
+							/>
+						<Backdrop/>
+					</React.Fragment>
 					:
 					null
 				}
