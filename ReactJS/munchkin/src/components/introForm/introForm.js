@@ -6,7 +6,8 @@ import axios from 'axios';
 import Popup from '../popup';
 import Select from '../select';
 import Backdrop from '../../UI/backdrop';
-
+import Button from '../../UI/button';
+import {Redirect, NavLink} from 'react-router-dom';
 
 export default class IntroForm extends Component {
 
@@ -50,7 +51,7 @@ export default class IntroForm extends Component {
 			// 	setTimeout(() => {
 			// 		resolve()
 			// 	}, 500)
-			// });
+			// });  вариант анимации
 
 			newCounterArr.splice(playersNumber);
 		}
@@ -117,25 +118,29 @@ export default class IntroForm extends Component {
 		return playersNames;
 	}
 
-	submitHandler = async event => {
+	submitHandler = async (event) => {
 		event.preventDefault();
-	
+
 		let arr = this.validNames();
 
 		await arr;
 
-		if(this.state.validation) {
-			await axios.post('https://munchkin-11975.firebaseio.com/players.json', arr)
-				.then(response => {
-					console.log(response)
-				})
-				.catch(error => {
-					this.setState({
-						errorMsg: 'Server Error',
-						errorPopup: true
-					})
-				})
-		}
+		this.props.getPlayers(arr, this.state.validation);
+
+
+		// Отправка на сервер!
+		// if(this.state.validation) {
+		// 	await axios.post('https://munchkin-11975.firebaseio.com/players.json', arr)
+		// 		.then(response => {
+		// 			console.log(response)
+		// 		})
+		// 		.catch(error => {
+		// 			this.setState({
+		// 				errorMsg: 'Server Error',
+		// 				errorPopup: true
+		// 			})
+		// 		})
+		// }
 	}
 
 	componentDidMount() {
@@ -155,51 +160,52 @@ export default class IntroForm extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<form onSubmit={this.submitHandler}>
-					<fieldset className='mt-4'>
-						<legend>Выберите количество игроков:</legend>
-						<Select
-							playersCounter={this.state.playersCounter}
-							updatePlayerCounter={this.updatePlayerCounter}
-							/>
-						<CSSTransitionGroup
-							transitionName={ {
-								enter: 'enter',
-								enterActive: 'enterActive',
-								leave: 'leave',
-								leaveActive: 'deleting',
-								appear: 'appear',
-								appearActive: 'appearActive'
-							} }
-							transitionEnterTimeout={500}
-							transitionLeaveTimeout={300}
-						>
-							{this.renderInput()}
-						</CSSTransitionGroup>
-					</fieldset>
+				<div className="container">
+					<form onSubmit={this.submitHandler}>
+						<fieldset className='mt-4'>
+							<legend>Выберите количество игроков:</legend>
+							<Select
+								playersCounter={this.state.playersCounter}
+								updatePlayerCounter={this.updatePlayerCounter}
+								/>
+							<CSSTransitionGroup
+								transitionName={ {
+									enter: 'enter',
+									enterActive: 'enterActive',
+									leave: 'leave',
+									leaveActive: 'deleting',
+									appear: 'appear',
+									appearActive: 'appearActive'
+								} }
+								transitionEnterTimeout={500}
+								transitionLeaveTimeout={300}
+							>
+								{this.renderInput()}
+							</CSSTransitionGroup>
+						</fieldset>
+						{
+							this.state.playersCounter === 0 
+							? 
+							null 
+							:
+							<Button label='Подвердить'/>
+						}
+						
+					</form>
 					{
-						this.state.playersCounter == 0 
-						? 
-						null 
+						this.state.errorPopup 
+						?
+						<React.Fragment>
+							<Popup
+								errorMsg={this.state.errorMsg}
+								closePopup={this.closePopup}
+								/>
+							<Backdrop/>
+						</React.Fragment>
 						:
-						<button 
-						type="submit" 
-						className="btn btn-primary">Подвертить</button>}
-					
-				</form>
-				{
-					this.state.errorPopup 
-					?
-					<React.Fragment>
-						<Popup
-							errorMsg={this.state.errorMsg}
-							closePopup={this.closePopup}
-							/>
-						<Backdrop/>
-					</React.Fragment>
-					:
-					null
-				}
+						null
+					}
+				</div>
 			</React.Fragment>
 		)
 	}
