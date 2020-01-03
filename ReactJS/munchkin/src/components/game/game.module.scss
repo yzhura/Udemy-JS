@@ -1,0 +1,37 @@
+.table {
+    th, td {
+        background-color: #ffcc80;
+        border: 0;
+        text-align: center;
+        font-size: 21px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 220px;
+        @media screen and (max-width: 475px) {
+            max-width: 90px;
+        }
+    }
+}
+
+.contentWrap {
+    min-width: 80px;
+    white-space: nowrap;
+    @media screen and (max-width: 475px) {
+        min-width: auto;
+    }
+}
+
+.winnerPopup {
+    z-index: 5;
+    max-width: 250px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-height: 450px;
+    min-width: 80vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

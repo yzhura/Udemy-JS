@@ -7,9 +7,16 @@ import Popup from '../popup';
 import Select from '../select';
 import Backdrop from '../../UI/backdrop';
 import Button from '../../UI/button';
-import {Redirect, NavLink} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
-export default class IntroForm extends Component {
+
+function ValidPlayers(player) {
+	this.name = player.name;
+	this.level = player.level;
+	this.straight = player.straight;
+}
+
+class IntroForm extends Component {
 
 	state = {
 		errorPopup: false,
@@ -24,7 +31,9 @@ export default class IntroForm extends Component {
 			name: '',
 			id: id+1,
 			validation: null,
-			isValid: ''
+			isValid: '',
+			level: 0,
+			straight: 0
 		};
 	}
 
@@ -90,32 +99,37 @@ export default class IntroForm extends Component {
 	validNames = () => {
 		let isValid;
 		const playersList = [...this.state.playersList];
-		const playersNames = [];
+		const playersArr = [];
+
 		playersList.map((el) => {
-			playersNames.push(el.name)
+			playersArr.push(
+				new ValidPlayers(el)
+			)
 		})
-		for(let i = 0; i < playersNames.length; i++) {
-			if(playersNames[i].length === 0) {
+
+		for(let i = 0; i < playersArr.length; i++) {
+			if(playersArr[i].name.length === 0) {
 				isValid = false;
 				break;
 			} else {
 				isValid = true;
 			}
 		}
-		isValid 
-			? 
-			this.setState({
-				errorPopup: false,
-				validation: true,
-				errorMsg: ``
-			})
-			: 
-			this.setState({
-				errorPopup: true,
-				validation: false,
-				errorMsg: `Введите никнеймы игроков`
-			}) 
-		return playersNames;
+
+		isValid
+		? 
+		this.setState({
+			errorPopup: false,
+			validation: true,
+			errorMsg: ``
+		})
+		: 
+		this.setState({
+			errorPopup: true,
+			validation: false,
+			errorMsg: `Введите никнеймы игроков`
+		}) 
+		return playersArr;
 	}
 
 	submitHandler = async (event) => {
@@ -125,8 +139,10 @@ export default class IntroForm extends Component {
 
 		await arr;
 
-		this.props.getPlayers(arr, this.state.validation);
-
+		if(this.state.validation) {
+			this.props.getPlayers(arr, this.state.validation);
+			this.props.history.push('/game')
+		}
 
 		// Отправка на сервер!
 		// if(this.state.validation) {
@@ -210,3 +226,5 @@ export default class IntroForm extends Component {
 		)
 	}
 }
+
+export default withRouter(IntroForm);
