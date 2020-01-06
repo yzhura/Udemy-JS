@@ -1,13 +1,5 @@
 $animation-time: .4s;
 
-.deleting {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    transform-origin: 50% 50%;
-    animation: anim-delete $animation-time ease-in-out forwards;
-}
-
 @keyframes anim-delete {
     0% {
         transform: scale(1);
@@ -18,4 +10,34 @@ $animation-time: .4s;
     100% {
         transform: scale(0);
     }
+}
+
+.field-appear {
+
+}
+
+.field-appear.field-appear-active {
+
+}
+
+.field-enter {
+
+}
+
+.field-enter.field-enter-active {
+
+}
+
+.field-leave {
+    opacity: 1;
+    visibility: visible;
+    transform-origin: 50% 50%;
+    transform: translateY(0) scale(1);
+}
+
+.field-leave.field-leave-active {
+    opacity: 1;
+    visibility: visible;
+    transform-origin: 50% 50%;
+    animation: anim-delete $animation-time ease-in-out forwards;
 }

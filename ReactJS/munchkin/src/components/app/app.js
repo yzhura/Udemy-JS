@@ -19,27 +19,32 @@ export class App extends Component {
         });
     }
 
+    startNewGame = () => {
+        this.setState({
+            redirect: false,
+            playersList: []
+        });
+    }
+
     render() {
         return (
             <Layout>
                 <Switch>
-                    <Route 
-                        path='/game' 
-                        component={() => <Game players={this.state.playersList} redirect={this.state.redirect}/>}>
-                    </Route>
-                    <Route 
-                        path='/' 
-                        component={() => <IntroForm getPlayers={this.getPlayers}/>}>
-                    </Route>
+                        <Route 
+                            path='/game' 
+                            component={() => 
+                                <Game 
+                                    players={this.state.playersList}
+                                    redirect={this.state.redirect}
+                                    startNewGame={this.startNewGame}/>}>
+                        </Route>
+                        <Route 
+                            path='/' 
+                            component={() => 
+                                <IntroForm 
+                                    getPlayers={this.getPlayers}/>}>
+                        </Route>
                 </Switch>
-                {/* {
-                    Пример без роутинга
-                    !this.state.redirect
-                    ?
-                    <IntroForm getPlayers={this.getPlayers}/>
-                    :
-                    <Game players={this.state.playersList}/>
-                } */}
             </Layout>
         )
     }

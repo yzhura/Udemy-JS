@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Input from '../../UI/Input';
 import {CSSTransitionGroup} from 'react-transition-group';
-import './introForm.scss';
 import axios from 'axios';
 import Popup from '../popup';
 import Select from '../select';
 import Backdrop from '../../UI/backdrop';
 import Button from '../../UI/button';
 import {withRouter} from 'react-router-dom';
+import './introForm.scss'
 
 
 function ValidPlayers(player) {
@@ -117,18 +117,19 @@ class IntroForm extends Component {
 		}
 
 		isValid
-		? 
-		this.setState({
-			errorPopup: false,
-			validation: true,
-			errorMsg: ``
-		})
-		: 
-		this.setState({
-			errorPopup: true,
-			validation: false,
-			errorMsg: `Введите никнеймы игроков`
-		}) 
+			? 
+				this.setState({
+					errorPopup: false,
+					validation: true,
+					errorMsg: ``
+				})
+			: 
+				this.setState({
+					errorPopup: true,
+					validation: false,
+					errorMsg: `Введите никнеймы игроков`
+				})
+		
 		return playersArr;
 	}
 
@@ -160,11 +161,11 @@ class IntroForm extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('https://munchkin-11975.firebaseio.com/players.json')
-			.then(response => {
-				let data = response.data;
-				console.log(data);
-			})
+		// axios.get('https://munchkin-11975.firebaseio.com/players.json')
+		// 	.then(response => {
+		// 		let data = response.data;
+		// 		console.log(data);
+		// 	})
 	}
 
 	closePopup = (event) => {
@@ -185,17 +186,12 @@ class IntroForm extends Component {
 								updatePlayerCounter={this.updatePlayerCounter}
 								/>
 							<CSSTransitionGroup
-								transitionName={ {
-									enter: 'enter',
-									enterActive: 'enterActive',
-									leave: 'leave',
-									leaveActive: 'deleting',
-									appear: 'appear',
-									appearActive: 'appearActive'
-								} }
-								transitionEnterTimeout={500}
-								transitionLeaveTimeout={300}
-							>
+								transitionName="field"
+								transitionAppear={true}
+								transitionAppearTimeout={400}
+								transitionEnterTimeout={400}
+								transitionLeaveTimeout={400}
+								>
 								{this.renderInput()}
 							</CSSTransitionGroup>
 						</fieldset>

@@ -3,9 +3,10 @@ import classes from './game.module.scss';
 import { Redirect } from 'react-router-dom';
 import ButtonCircle from '../../UI/buttonCircle';
 import Backdrop from '../../UI/backdrop';
-import TemplateTable from '../../components/templateTable'
+import TemplateTable from '../../components/templateTable';
+import {withRouter} from 'react-router-dom';
 
-export default class Game extends Component {
+class Game extends Component {
 
     state = {
         playersList: [...this.props.players],
@@ -79,6 +80,27 @@ export default class Game extends Component {
         })
     }
 
+    restartGame = () => {
+       const oldPlayers = [...this.state.playersList];
+       oldPlayers.forEach(el => {
+           el.level = 0;
+           el.straight = 0;
+       })
+       this.setState({
+           playersList: oldPlayers,
+           winner: ''
+       })
+    }
+
+    startNewGame = async (e) => {
+        this.setState({
+            playersList: [],
+            winner: ''
+        });
+        this.props.startNewGame();
+        this.props.history.push('/');
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -89,7 +111,25 @@ export default class Game extends Component {
                         <Backdrop/>
                         <div className={`${classes.winnerPopup} alert alert-dismissible alert-success`}>
                             <h1>Победил:</h1>
-                            <strong><p>{`${this.state.winner}`}</p></strong>
+                            <strong className={classes.winnerName}><p>{`${this.state.winner}`}</p></strong>
+                            <ul className={classes.btnList}>
+                                <li>
+                                    <button 
+                                        onClick={(e) => this.startNewGame(e)}
+                                        type="submit" 
+                                        className="btn btn-primary">
+                                            Новая игра
+                                    </button>
+                                </li>
+                                <li >
+                                    <button 
+                                        onClick={this.restartGame}
+                                        type="submit" 
+                                        className="btn btn-primary">
+                                            Сыграть еще раз
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
                     </React.Fragment>
                     :
@@ -100,3 +140,5 @@ export default class Game extends Component {
         )
     }
 }
+
+export default withRouter(Game);
