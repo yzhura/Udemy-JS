@@ -109,9 +109,10 @@ export default class App extends Component {
 			const target = event.target.value.toLowerCase();
 			this.setState(({todoData}) => {
 				const searchingWord = target;
-				const newArr = todoData;
+				const newArr = [...todoData];
 				newArr.filter((el) => {
-					return el.visibility = el.searchlabel.includes(searchingWord); //Фильтром проверил совпадает ли слово
+					return el.visibility = el.searchlabel.includes(searchingWord);
+					//Фильтром проверил совпадает ли слово
 				});
 				return {
 					todoData: newArr
